@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import { Container, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Anil } from "./Anil.js";
+import { Derek } from "./Derek.js";
+import { Kevin } from "./Kevin.js";
+import { Sid } from "./Sid.js";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Container>
+        <Row>
+          <Col>
+          <h1>Personal Information Exposed by IoT Devices</h1>
+          </Col>
+        </Row>
+        <Row>
+          <DropdownButton title="Select a member">
+            <Dropdown.Item href="/anil">Anil</Dropdown.Item>
+            <Dropdown.Item href="/derek">Derek</Dropdown.Item>
+            <Dropdown.Item href="/kevin">Kevin</Dropdown.Item>
+            <Dropdown.Item href="/sid">Sid</Dropdown.Item>
+          </DropdownButton>
+        </Row>
+      </Container>
+
+      <Routes>
+        <Route path='/anil' element={<Anil />}/>
+        <Route path='/derek' element={<Derek />}/>
+        <Route path='/kevin' element={<Kevin />}/>
+        <Route path='/sid' element={<Sid />}/>
+      </Routes>
+    </>
   );
 }
 
