@@ -50,20 +50,33 @@ export function Derek() {
   udpPackets.forEach((d) => udpPotentialQueryObjects.push(Object.values(d._source.layers).at(4)))
   udpPotentialQueryObjects.forEach(
     function(d){
-      if(Object.values(d).length > 8 && typeof Object.values(d).at(7) === 'object'){
+      if(Object.values(d).length > 6 && typeof Object.values(d).at(7) === 'object'){
         udpQueryObjects.push(Object.values(d).at(7))
+      }
+      if(Object.values(d).length > 7 && typeof Object.values(d).at(8) === 'object'){
+        udpQueryObjects.push(Object.values(d).at(8))
       }
     }
   )
-  udpQueryObjects.forEach((d) => udpQueryExposed.push(Object.values(d).at(0)))
+
+  udpQueryObjects.forEach(
+    function(d){
+      let len = Object.values(d).length
+      for(let i = 0; i < len; i++){
+        udpQueryExposed.push(Object.values(d).at(i))
+      }
+    }
+  )
   udpQueryExposed.forEach(
     function(d){
       if(!udpExposed.includes(Object.values(d).at(0))){
         udpExposed.push(Object.values(d).at(0))
       }
+      if(Object.values(d).length > 6 && Object.values(d).length <= 7 && !udpExposed.includes(Object.values(d).at(6))){
+        udpExposed.push(Object.values(d).at(6))
+      }
     }
   )
-  console.log(udpExposed)
 
   let tcpObjects = [];
   let tcpExposed = [];
@@ -147,6 +160,20 @@ export function Derek() {
         <Col><svg id="packetTypes"></svg></Col>
         <Col><svg id="potentialRisk"></svg></Col>
         <Col></Col>
+      </Row>
+      <Row>
+        <Col>
+          <h4>Exposed from UDP Packets</h4>
+          <ul>
+            {udpExposed.map((d) => {return <li>{d}</li>})}
+          </ul>
+        </Col>
+        <Col>
+          <h4>Exposed from TCP SYN/FIN Packets</h4>
+          <ul>
+            {tcpExposed.map((d) => {return <li>{d}</li>})}
+          </ul>
+        </Col>
       </Row>
     </Container>
 
