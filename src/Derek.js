@@ -33,16 +33,12 @@ export function Derek() {
 
   udpPackets.forEach(
     function(d){
-      udpObjects.push(Object.values(d._source.layers.eth).at(1))
       udpObjects.push(Object.values(d._source.layers.eth).at(3))
     }
   )
   udpObjects.forEach(
     function(d){
-      if(!udpExposed.includes(Object.values(d).at(2))){
-        udpExposed.push(Object.values(d).at(2)) 
-      }
-      if(!udpExposed.includes(Object.values(d).at(6))){
+      if(!udpExposed.includes(Object.values(d).at(6)) && Object.values(d).length > 10){
         udpExposed.push(Object.values(d).at(6))
       }
     }
@@ -77,6 +73,7 @@ export function Derek() {
       }
     }
   )
+  console.log(udpExposed)
 
   let tcpObjects = [];
   let tcpExposed = [];
@@ -97,7 +94,7 @@ export function Derek() {
       }
     }
   )
-  console.log(tcpExposed)
+  //console.log(tcpExposed)
   
   React.useEffect(() => {
     var svg = d3.select("#packetTypes")
