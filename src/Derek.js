@@ -101,8 +101,8 @@ export function Derek() {
   
   React.useEffect(() => {
     var svg = d3.select("#packetTypes")
-    .attr("width", 210)
-    .attr("height", 210)
+    .attr("width", 400)
+    .attr("height", 300)
     var arc = d3.arc().innerRadius(0).outerRadius(100)
     var pie = d3.pie().value(function(d) {return d})
     const color = d3.scaleOrdinal().range(["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"])
@@ -117,10 +117,36 @@ export function Derek() {
        .style("stroke-width", ".25px");
   })
 
+  React.useEffect(() => {
+    const color = d3.scaleOrdinal().range(["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"])
+    var svg = d3.select("#packetTypes")
+    svg.selectAll("mydots")
+      .data(types)
+      .enter()
+      .append("circle")
+        .attr("transform", "translate(" + 150 + "," + -75 + ")")
+        .attr("cx", 100)
+        .attr("cy", function(d,i){ return 100 + i*25})
+        .attr("r", 7)
+        .style("fill", function(d){ return color(d)})
+
+    svg.selectAll("mylabels")
+      .data(types)
+      .enter()
+      .append("text")
+        .attr("transform", "translate(" + 150 + "," + -75 + ")")
+        .attr("x", 120)
+        .attr("y", function(d,i){ return 100 + i*25})
+        .style("fill", function(d){ return color(d)})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle")
+  })
+
   React.useEffect(() =>{
     var svg = d3.select("#potentialRisk")
     .attr("width", 400)
-    .attr("height", 400)
+    .attr("height", 300)
     .append("g")
     .attr("transform",
           "translate(" + 60 + "," + 30 + ")")
@@ -129,11 +155,11 @@ export function Derek() {
                   .range([0,300])
                   .domain(titles.map(function(title){ return title}))
                   .padding(0.2)
-    svg.append("g").attr("transform", "translate(0," + 300 + ")").call(d3.axisBottom(xaxis))
+    svg.append("g").attr("transform", "translate(0," + 200 + ")").call(d3.axisBottom(xaxis))
 
     var yaxis = d3.scaleLinear()
                   .domain([0,1000])
-                  .range([300,0])
+                  .range([200,0])
     svg.append("g").call(d3.axisLeft(yaxis))
 
     svg.selectAll("mybar")
@@ -143,7 +169,7 @@ export function Derek() {
         .attr("x", function(d) { return xaxis(d.title); })
         .attr("y", function(d) { return yaxis(d.count); })
         .attr("width", xaxis.bandwidth())
-        .attr("height", function(d) { return 300 - yaxis(d.count); })
+        .attr("height", function(d) { return 200 - yaxis(d.count); })
 
 
   })
