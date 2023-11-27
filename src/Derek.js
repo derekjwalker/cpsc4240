@@ -13,7 +13,13 @@ export function Derek() {
     typeCount.push(1);
   }
 
-  data.forEach((i) => packetTypes.push(Object.values(i._source.layers.frame).at(17)))
+  data.forEach(
+    function(i){
+      if(Object.values(i._source.layers.frame).length > 17){
+        packetTypes.push(Object.values(i._source.layers.frame).at(17))
+      }
+    }
+  )
   packetTypes.forEach(x => types.includes(x) ? typeCount[types.indexOf(x)] += 1 : addNewType(x))
 
   let udpPackets = [];
@@ -188,9 +194,6 @@ export function Derek() {
     <Container>
       <Row>
         <h3>Derek's Data</h3>
-      </Row>
-      <Row>
-        <p>This data was collected on a residential home network used by 5 people and their devices.</p>
       </Row>
       <Row>
         <Col><svg id="packetTypes"></svg></Col>
