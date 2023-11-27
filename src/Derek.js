@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from 'react-bootstrap';
-import data from "./DerekData.json";
+import data from "./derekResults.json";
 import * as d3 from "d3";
 
 export function Derek() {
@@ -13,14 +13,14 @@ export function Derek() {
     typeCount.push(1);
   }
 
-  data.forEach((i) => packetTypes.push(Object.values(i._source.layers.frame).at(16)))
+  data.forEach((i) => packetTypes.push(Object.values(i._source.layers.frame).at(17)))
   packetTypes.forEach(x => types.includes(x) ? typeCount[types.indexOf(x)] += 1 : addNewType(x))
 
   let udpPackets = [];
   let tcpPackets = [];
   let otherPackets = [];
   
-  data.forEach((i) => Object.values(i._source.layers.frame).at(16) === 'UDP' ? udpPackets.push(i) : Object.values(i._source.layers.frame).at(16) === 'TCP SYN/FIN' ? tcpPackets.push(i) : otherPackets.push(i))
+  data.forEach((i) => Object.values(i._source.layers.frame).at(17) === 'UDP' ? udpPackets.push(i) : Object.values(i._source.layers.frame).at(17) === 'TCP SYN/FIN' ? tcpPackets.push(i) : otherPackets.push(i))
 
   const titles = ["UDP","TCP SYN/FIN", "Other"];
   const count = [{title:"UDP", count:udpPackets.length},{title:"TCP SYN/FIN", count:tcpPackets.length},{title:"Other", count:otherPackets.length}]
@@ -66,10 +66,23 @@ export function Derek() {
   udpQueryExposed.forEach(
     function(d){
       if(!udpExposed.includes(Object.values(d).at(0))){
-        udpExposed.push(Object.values(d).at(0))
+        if(
+            !Object.values(d).at(0).toString().includes(".arpa") && 
+            !Object.values(d).at(0).toString().includes(":") && 
+            !Object.values(d).at(0).toString().includes("192")
+          ){
+            udpExposed.push(Object.values(d).at(0))
+        }
+        
       }
-      if(Object.values(d).length > 6 && Object.values(d).length <= 7 && !udpExposed.includes(Object.values(d).at(6))){
-        udpExposed.push(Object.values(d).at(6))
+      if(Object.values(d).length === 7 && !udpExposed.includes(Object.values(d).at(6))){
+        if(
+            !Object.values(d).at(6).toString().includes(".arpa") && 
+            !Object.values(d).at(6).toString().includes(":") && 
+            !Object.values(d).at(6).toString().includes("192")
+          ){
+            udpExposed.push(Object.values(d).at(6))
+        }
       }
     }
   )
@@ -155,7 +168,7 @@ export function Derek() {
     svg.append("g").attr("transform", "translate(0," + 200 + ")").call(d3.axisBottom(xaxis))
 
     var yaxis = d3.scaleLinear()
-                  .domain([0,1000])
+                  .domain([0,5000])
                   .range([200,0])
     svg.append("g").call(d3.axisLeft(yaxis))
 

@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { Container, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Demo } from "./Demo.js";
 import { Anil } from "./Anil.js";
 import { Derek } from "./Derek.js";
 import { Kevin } from "./Kevin.js";
@@ -18,6 +19,7 @@ function App() {
         </Row>
         <Row>
           <DropdownButton title="Select a member">
+            <Dropdown.Item href="/demo">Demo</Dropdown.Item>
             <Dropdown.Item href="/anil">Anil</Dropdown.Item>
             <Dropdown.Item href="/derek">Derek</Dropdown.Item>
             <Dropdown.Item href="/kevin">Kevin</Dropdown.Item>
@@ -27,6 +29,7 @@ function App() {
       </Container>
 
       <Routes>
+        <Route path='/demo' element={<Demo />}/>
         <Route path='/anil' element={<Anil />}/>
         <Route path='/derek' element={<Derek />}/>
         <Route path='/kevin' element={<Kevin />}/>
