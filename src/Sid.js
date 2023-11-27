@@ -12,8 +12,13 @@ export function Sid() {
     types.push(x);
     typeCount.push(1);
   }
-
-  data.forEach((i) => packetTypes.push(Object.values(i._source.layers.frame).at(17)))
+  data.forEach(
+    function(i){
+      if(Object.values(i._source.layers.frame).length > 17){
+        packetTypes.push(Object.values(i._source.layers.frame).at(17))
+      }
+    }
+  )
   packetTypes.forEach(x => types.includes(x) ? typeCount[types.indexOf(x)] += 1 : addNewType(x))
 
   let udpPackets = [];
@@ -86,7 +91,6 @@ export function Sid() {
       }
     }
   )
-  console.log(udpExposed)
 
   let tcpObjects = [];
   let tcpExposed = [];
@@ -107,7 +111,6 @@ export function Sid() {
       }
     }
   )
-  //console.log(tcpExposed)
   
   React.useEffect(() => {
     var svg = d3.select("#packetTypes")
@@ -168,7 +171,7 @@ export function Sid() {
     svg.append("g").attr("transform", "translate(0," + 200 + ")").call(d3.axisBottom(xaxis))
 
     var yaxis = d3.scaleLinear()
-                  .domain([0,5000])
+                  .domain([0,10000])
                   .range([200,0])
     svg.append("g").call(d3.axisLeft(yaxis))
 
