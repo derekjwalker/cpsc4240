@@ -92,7 +92,6 @@ export function Derek() {
       }
     }
   )
-  console.log(udpExposed)
 
   let tcpObjects = [];
   let tcpExposed = [];
@@ -113,7 +112,6 @@ export function Derek() {
       }
     }
   )
-  //console.log(tcpExposed)
   
   React.useEffect(() => {
     var svg = d3.select("#packetTypes")
@@ -136,7 +134,7 @@ export function Derek() {
   React.useEffect(() => {
     const color = d3.scaleOrdinal().range(["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"])
     var svg = d3.select("#packetTypes")
-    svg.selectAll("mydots")
+    svg.selectAll("legenddots")
       .data(types)
       .enter()
       .append("circle")
@@ -146,7 +144,7 @@ export function Derek() {
         .attr("r", 7)
         .style("fill", function(d){ return color(d)})
 
-    svg.selectAll("mylabels")
+    svg.selectAll("legendlabels")
       .data(types)
       .enter()
       .append("text")
@@ -178,7 +176,7 @@ export function Derek() {
                   .range([200,0])
     svg.append("g").call(d3.axisLeft(yaxis))
 
-    svg.selectAll("mybar")
+    svg.selectAll("bars")
       .data(count)
       .enter()
       .append("rect")
@@ -186,8 +184,6 @@ export function Derek() {
         .attr("y", function(d) { return yaxis(d.count); })
         .attr("width", xaxis.bandwidth())
         .attr("height", function(d) { return 200 - yaxis(d.count); })
-
-
   })
 
   return(
@@ -198,7 +194,6 @@ export function Derek() {
       <Row>
         <Col><svg id="packetTypes"></svg></Col>
         <Col><svg id="potentialRisk"></svg></Col>
-        <Col></Col>
       </Row>
       <Row>
         <Col>
@@ -215,6 +210,5 @@ export function Derek() {
         </Col>
       </Row>
     </Container>
-
   );
 }

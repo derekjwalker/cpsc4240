@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Row, Col } from 'react-bootstrap';
-import data from "./DemoResults.json";
+import data from "./motivationResults.json";
 import * as d3 from "d3";
 
-export function Demo() {
+export function Motivation() {
   let packetTypes = [];
   let types = [];
   let typeCount = [];
@@ -86,7 +86,6 @@ export function Demo() {
       }
     }
   )
-  console.log(udpExposed)
 
   let tcpObjects = [];
   let tcpExposed = [];
@@ -107,7 +106,6 @@ export function Demo() {
       }
     }
   )
-  //console.log(tcpExposed)
   
   React.useEffect(() => {
     var svg = d3.select("#packetTypes")
@@ -130,7 +128,7 @@ export function Demo() {
   React.useEffect(() => {
     const color = d3.scaleOrdinal().range(["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"])
     var svg = d3.select("#packetTypes")
-    svg.selectAll("mydots")
+    svg.selectAll("legenddots")
       .data(types)
       .enter()
       .append("circle")
@@ -140,7 +138,7 @@ export function Demo() {
         .attr("r", 7)
         .style("fill", function(d){ return color(d)})
 
-    svg.selectAll("mylabels")
+    svg.selectAll("legendlabels")
       .data(types)
       .enter()
       .append("text")
@@ -172,7 +170,7 @@ export function Demo() {
                   .range([200,0])
     svg.append("g").call(d3.axisLeft(yaxis))
 
-    svg.selectAll("mybar")
+    svg.selectAll("bars")
       .data(count)
       .enter()
       .append("rect")
@@ -187,15 +185,11 @@ export function Demo() {
   return(
     <Container>
       <Row>
-        <h3>Derek's Data</h3>
-      </Row>
-      <Row>
-        <p>This data was collected on a residential home network used by 5 people and their devices.</p>
+        <h3>Data that motivated the project</h3>
       </Row>
       <Row>
         <Col><svg id="packetTypes"></svg></Col>
         <Col><svg id="potentialRisk"></svg></Col>
-        <Col></Col>
       </Row>
       <Row>
         <Col>
