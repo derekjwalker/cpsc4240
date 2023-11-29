@@ -1,9 +1,16 @@
 # To run
 <ul>
+<li>Extract results.zip (result files are too large for GitHub uncompressed)</li>
 <li>Install npm with sudo apt install npm</li>
 <li>Install dependencies with npm install -y</li>
 <li>Provide enough memory for large files with export NODE_OPTIONS=--max_old_space_size=5120</li>
 <li>Start your local server with npm start</li>
+</ul>
+
+# To analyze your own results
+<ul>
+<li>Download Wireshark, run a scan, and export packet dissections as JSON</li>
+<li>Either change what one of the {group member}.js files import for data to yours, or use a {group member}.js file as a template and modify App.js to create a page for your results<li>
 </ul>
 
 # File explanation  
