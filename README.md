@@ -10,7 +10,7 @@
 # To analyze your own results
 <ul>
 <li>Download Wireshark, run a scan, and export packet dissections as JSON</li>
-<li>Either change what one of the {group member}.js files import for data to yours, or use a {group member}.js file as a template and modify App.js to create a page for your results<li>
+<li>Either change what one of the {group member}.js files import for data to yours, or use a {group member}.js file as a template and modify App.js to create a page for your results</li>
 </ul>
 
 # File explanation  
